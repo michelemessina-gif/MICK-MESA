@@ -1,0 +1,446 @@
+/* =========================
+   BASE / RESET
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #080808;
+  color: #f5f5f5;
+  line-height: 1.7;
+}
+
+img,
+video {
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  width: min(1040px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.narrow {
+  width: min(800px, calc(100% - 48px));
+}
+
+/* =========================
+   TYPOGRAPHY
+========================= */
+
+.section {
+  padding: 110px 0;
+}
+
+.section-tag {
+  color: #bfa46a;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-size: clamp(2.3rem, 5vw, 3.8rem);
+  line-height: 1.05;
+  margin-bottom: 28px;
+}
+
+p {
+  color: #cfcfcf;
+}
+
+/* =========================
+   HEADER / NAV
+========================= */
+
+.site-header {
+  min-height: 100vh;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+
+  min-height: 60px;
+  padding: 10px 5%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: rgba(8, 8, 8, 0.78);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.logo {
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 24px;
+}
+
+.nav-links a {
+  color: #ddd;
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #bfa46a;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* =========================
+   HERO BACKGROUND IMAGE
+========================= */
+
+.trailer-strip {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  display: flex;
+  overflow: hidden;
+}
+
+.trailer-strip img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center center;
+
+  filter:
+    grayscale(100%)
+    brightness(0.9)
+    contrast(1.05);
+}
+
+/* =========================
+   HERO OVERLAY
+========================= */
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.10),
+      rgba(0, 0, 0, 0.25)
+    );
+}
+
+/* =========================
+   HERO CONTENT
+========================= */
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+
+  width: min(760px, 90%);
+  margin-left: auto;
+  margin-right: 8%;
+
+  text-align: left;
+
+  animation: fadeUp 1.2s ease forwards;
+}
+
+.eyebrow {
+  color: #bfa46a;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+}
+
+.hero-content h2 {
+  font-size: clamp(4rem, 12vw, 9rem);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  line-height: 0.95;
+}
+
+.hero-text {
+  max-width: 650px;
+  margin: 20px 0 35px;
+  font-size: 1.1rem;
+}
+
+/* =========================
+   ALBUM
+========================= */
+
+.two-column {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.album-cover {
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto;
+  display: block;
+
+  border-radius: 18px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55);
+}
+
+/* =========================
+   TRACKLIST
+========================= */
+
+.tracks-section {
+  background: #080808;
+}
+
+.tracklist {
+  margin-top: 48px;
+}
+
+.track-item {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 28px;
+
+  padding: 28px 0;
+
+  border-bottom: 1px solid rgba(191, 164, 106, 0.22);
+}
+
+.track-number {
+  color: #bfa46a;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.track-item h3 {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.track-item p {
+  max-width: 680px;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #cfcfcf;
+}
+
+.track-item:hover h3 {
+  color: #bfa46a;
+}
+
+/* =========================
+   TOUR
+========================= */
+
+.tour-list {
+  list-style: none;
+  margin-top: 34px;
+}
+
+.tour-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 22px 0;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.tour-list span {
+  font-weight: 700;
+}
+
+.tour-list strong {
+  color: #bfa46a;
+}
+
+/* =========================
+   STORE
+========================= */
+
+.store-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.product-card {
+  padding: 28px;
+  text-align: center;
+
+  background: #151515;
+  border: 1px solid rgba(191, 164, 106, 0.25);
+  border-radius: 22px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+}
+
+.product-card img {
+  border-radius: 14px;
+  margin-bottom: 22px;
+}
+
+.product-card h3 {
+  margin-bottom: 10px;
+}
+
+.product-card p {
+  margin-bottom: 22px;
+}
+
+/* =========================
+   CONTACT
+========================= */
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  padding: 38px;
+  margin-top: 35px;
+
+  background: #151515;
+  border: 1px solid rgba(191, 164, 106, 0.25);
+  border-radius: 22px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+}
+
+.contact-form label {
+  font-weight: 700;
+  color: #bfa46a;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 14px;
+
+  background: #0d0d0d;
+  border: 1px solid rgba(191, 164, 106, 0.25);
+  border-radius: 10px;
+
+  color: #fff;
+  font: inherit;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: #bfa46a;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+  padding: 35px 5%;
+  text-align: center;
+  background: #050505;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer a {
+  color: #bfa46a;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(35px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 900px) {
+  .nav-links {
+    display: none;
+  }
+
+  .two-column,
+  .store-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-content h2 {
+    font-size: clamp(3.4rem, 18vw, 6rem);
+  }
+
+  .section {
+    padding: 80px 0;
+  }
+
+  .container,
+  .narrow {
+    width: min(100% - 32px, 1040px);
+  }
+
+  .support-box {
+    padding: 38px 24px;
+  }
+
+  .track-item {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
