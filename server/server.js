@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const db = require("./database");
+
 require("dotenv").config();
 
 const app = express();
@@ -22,16 +24,34 @@ app.post("/api/contact", (req, res) => {
     });
   }
 
-  console.log("\n==============================");
-console.log("🔥 NEW CONTACT MESSAGE RECEIVED");
-console.log("==============================");
-console.log("Name:", name);
-console.log("Email:", email);
-console.log("Message:", message);
-console.log("==============================\n");
-  res.status(200).json({
-    success: true,
-    message: "Message received successfully."
+  const sql = `
+    INSERT INTO messages (name, email, message)
+    VALUES (?, ?, ?)
+  `;
+
+  db.run(sql, [name, email, message], function (err) {
+    if (err) {
+      console.error("Database save error:", err.message);
+
+      return res.status(500).json({
+        success: false,
+        message: "Something went wrong while saving your message."
+      });
+    }
+
+    console.log("\n==============================");
+    console.log("🔥 MESSAGE SAVED TO DATABASE");
+    console.log("==============================");
+    console.log("ID:", this.lastID);
+    console.log("Name:", name);
+    console.log("Email:", email);
+    console.log("Message:", message);
+    console.log("==============================\n");
+
+    res.status(200).json({
+      success: true,
+      message: "Message saved successfully."
+    });
   });
 });
 
