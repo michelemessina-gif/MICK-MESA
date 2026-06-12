@@ -135,6 +135,66 @@ app.put("/api/messages/:id", (req, res) => {
     });
   });
 });
+
+app.post("/api/newsletter", (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({
+      success: false,
+      message: "Email is required."
+    });
+  }
+
+  const sql = `
+    INSERT INTO subscribers (email)
+    VALUES (?)
+  `;
+
+  db.run(sql, [email], function (err) {
+    if (err) {
+      if (err.message.includes("UNIQUE")) {
+        return res.status(400).json({
+          success: false,
+          message: "This email is already subscribed."
+        });
+      }
+
+      return res.status(500).json({
+        success: false,
+        message: "Could not subscribe. Please try again."
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Successfully subscribed to the newsletter."
+    });
+  });
+});
+app.get("/api/subscribers", (req, res) => {
+  const sql = `
+    SELECT id, email, created_at
+    FROM subscribers
+    ORDER BY created_at DESC
+  `;
+
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      console.error("Database read error:", err.message);
+
+      return res.status(500).json({
+        success: false,
+        message: "Something went wrong while loading subscribers."
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      subscribers: rows
+    });
+  });
+});
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
