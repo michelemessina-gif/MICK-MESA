@@ -1,4 +1,16 @@
+const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+if (isLoggedIn !== "true") {
+  window.location.href = "login.html";
+}
+
+
 const messagesList = document.querySelector("#messages-list");
+const subscribersList = document.querySelector("#subscribers-list");
+
+/* =========================
+   LOAD CONTACT MESSAGES
+========================= */
 
 async function loadMessages() {
   try {
@@ -45,6 +57,10 @@ async function loadMessages() {
   }
 }
 
+/* =========================
+   UPDATE CONTACT MESSAGE
+========================= */
+
 function attachSaveButtons() {
   const saveButtons = document.querySelectorAll(".save-message-btn");
 
@@ -76,6 +92,10 @@ function attachSaveButtons() {
   });
 }
 
+/* =========================
+   DELETE CONTACT MESSAGE
+========================= */
+
 function attachDeleteButtons() {
   const deleteButtons = document.querySelectorAll(".delete-message-btn");
 
@@ -96,4 +116,74 @@ function attachDeleteButtons() {
   });
 }
 
+/* =========================
+   LOAD NEWSLETTER SUBSCRIBERS
+========================= */
+
+async function loadSubscribers() {
+  try {
+    const response = await fetch("http://127.0.0.1:5050/api/subscribers");
+    const result = await response.json();
+
+    if (!result.success) {
+      subscribersList.textContent = "Could not load subscribers.";
+      return;
+    }
+
+    if (result.subscribers.length === 0) {
+      subscribersList.textContent = "No subscribers yet.";
+      return;
+    }
+
+    subscribersList.innerHTML = result.subscribers
+      .map((subscriber) => {
+        return `
+          <article class="admin-message" data-id="${subscriber.id}">
+            <h3>${subscriber.email}</h3>
+            <small>${subscriber.created_at}</small>
+
+            <button class="delete-subscriber-btn" data-id="${subscriber.id}">
+              Delete
+            </button>
+          </article>
+        `;
+      })
+      .join("");
+
+    attachSubscriberDeleteButtons();
+  } catch (error) {
+    subscribersList.textContent = "Something went wrong.";
+    console.error(error);
+  }
+}
+
+/* =========================
+   DELETE NEWSLETTER SUBSCRIBER
+========================= */
+
+function attachSubscriberDeleteButtons() {
+  const deleteButtons = document.querySelectorAll(".delete-subscriber-btn");
+
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", async () => {
+      const id = button.dataset.id;
+
+      const response = await fetch(`http://127.0.0.1:5050/api/subscribers/${id}`, {
+        method: "DELETE"
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        loadSubscribers();
+      }
+    });
+  });
+}
+
+/* =========================
+   INITIAL LOAD
+========================= */
+
 loadMessages();
+loadSubscribers();

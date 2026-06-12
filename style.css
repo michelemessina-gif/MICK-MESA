@@ -461,3 +461,26 @@ p {
 .delete-message-btn:hover {
   background: rgba(255, 80, 80, 0.12);
 }
+.delete-subscriber-btn {
+  margin-top: 16px;
+  padding: 10px 18px;
+
+  border: 1px solid rgba(255, 80, 80, 0.7);
+  border-radius: 999px;
+
+  background: transparent;
+  color: #ff8080;
+
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.delete-subscriber-btn:hover {
+  background: rgba(255, 80, 80, 0.12);
+}
+
+.admin-divider {
+  margin: 60px 0;
+  border: none;
+  border-top: 1px solid rgba(191, 164, 106, 0.25);
+}
