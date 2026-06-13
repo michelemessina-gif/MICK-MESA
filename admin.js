@@ -4,9 +4,19 @@ if (isLoggedIn !== "true") {
   window.location.href = "login.html";
 }
 
+const logoutBtn = document.querySelector("#logout-btn");
 
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", () => {
+    localStorage.removeItem("isLoggedIn");
+    window.location.href = "login.html";
+  });
+}
 const messagesList = document.querySelector("#messages-list");
 const subscribersList = document.querySelector("#subscribers-list");
+const messagesCount = document.querySelector("#messages-count");
+const subscribersCount = document.querySelector("#subscribers-count");
+
 
 /* =========================
    LOAD CONTACT MESSAGES
@@ -16,6 +26,7 @@ async function loadMessages() {
   try {
     const response = await fetch("http://127.0.0.1:5050/api/messages");
     const result = await response.json();
+    messagesCount.textContent = result.messages.length;
 
     if (!result.success) {
       messagesList.textContent = "Could not load messages.";
@@ -124,6 +135,7 @@ async function loadSubscribers() {
   try {
     const response = await fetch("http://127.0.0.1:5050/api/subscribers");
     const result = await response.json();
+    subscribersCount.textContent = result.subscribers.length;
 
     if (!result.success) {
       subscribersList.textContent = "Could not load subscribers.";
